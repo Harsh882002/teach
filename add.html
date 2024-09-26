@@ -1,0 +1,54 @@
+Name: <input type="text" id="name"> <br> <br>
+age: <input type="text" id="age"><br> <br>
+gender <select name="gender" id="gender">
+    <option value="male">male</option>
+    <option value="female">female</option>
+</select>
+ email: <input type="email" id="email"><br> <br>
+city: <input type="text" id="city"><br> <br>
+Profession: <input type="text" id="pro"><br> <br>
+<button onclick="postData()">Submit</button><br> <br>
+
+
+
+<script>
+function postData(){
+
+    /*
+    hard coded data
+doc ={
+    "name": "wwwwPriya Reddy",
+    "age": 27,
+    "gender": "Female",
+    "email": "priya.reddy@example.com",
+    "city": "Kolkata",
+    "profession": "Marketing Specialist"
+}
+*/
+
+doc ={
+    "name": document.getElementById('name').value,
+    "age": document.getElementById('age').value,
+    "gender":document.getElementById("gender").value,
+     "email":document.getElementById('email').value,
+    "city": document.getElementById('city').value,
+    "profession": document.getElementById('pro').value
+}
+
+url = "http://localhost:8989/employees"
+
+fetch(url,{
+    method: "POST",
+    headers:{
+        'Accept' : 'application/json',
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(doc)
+})
+
+.then(res => res.json())
+.then(res =>{
+    window.location.href = 'frontend.html'
+})
+}
+</script>

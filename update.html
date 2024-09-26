@@ -1,0 +1,59 @@
+Name: <input type="text" id="name"> <br> <br>
+age: <input type="text" id="age">
+<button onclick="putData()">update</button>
+<a class="btn btn-info" href='frontend.html'>cancel</a>
+
+
+<script>
+    const urlParam = new URLSearchParams(window.location.search);
+    const id = urlParam.get('id');
+
+    function putData() {
+
+
+        /* Hard coded
+        doc = {
+        "id": "66f13ad28e2ac3ebc8b6de9e",
+        "name": "choman Mehta",
+        "age": 3542
+       }*/
+
+        doc = {
+            "id": id,
+            "name": document.getElementById("name").value,
+            "age": document.getElementById("age").value,
+        }
+
+
+        url = "http://localhost:8989/employees"
+
+        fetch(url, {
+            method: "PUT",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(doc)
+        })
+
+            .then(res => res.json())
+            .then(res => {
+                window.location.href = 'frontend.html'
+            })
+
+    }
+
+
+    url = `http://localhost:8989/employees/${id}`
+    fetch(url)
+        .then(res => res.json())
+        .then(res => {
+            console.log(res)
+            // console.table(res) to show in table
+            document.getElementById("name").value = res['name'];  //to show particular name in input box
+            document.getElementById("age").value = res['age'];
+        })
+
+
+
+</script>
